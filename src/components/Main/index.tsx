@@ -4,12 +4,13 @@ import { youtube_parser } from "../../utils.ts";
 import axios from "axios";
 
 export const Main = () => {
-  const inputUrlRef = useRef<HTMLInputElement>("");
-  const [urlResult, setUrlResult] = useState(null);
+  const inputUrlRef = useRef<HTMLInputElement>(null);
+  const [urlResult, setUrlResult] = useState("");
+  const [buscando, setBuscando] = useState("");
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
-    const youtubeID = youtube_parser(inputUrlRef.current.value);
+    const youtubeID = youtube_parser(inputUrlRef.current!.value);
 
     const options = {
       method: "get",
@@ -24,18 +25,17 @@ export const Main = () => {
     };
     axios(options)
       .then((res) => setUrlResult(res.data.link))
-      .catch((err) => console.log(err));
+      .catch((err) => setBuscando(err));
 
-    inputUrlRef.current.value = "";
-    console.log(urlResult);
+    inputUrlRef.current!.value = "";
   };
   return (
     <StyledMain>
-      <h1 className="main__title">Descargate el beat </h1>
+      <h1 className="main__title">Para la joyita</h1>
 
       <form onSubmit={handleSubmit} className="main__form">
         <label htmlFor="url">Url de youtube</label>
-        <div>
+        <div className="main__form__container">
           <input
             ref={inputUrlRef}
             className="main__form__input"
@@ -43,7 +43,12 @@ export const Main = () => {
             type="text"
             id="url"
           />
-          <button>Buscar</button>
+          <button
+            className="main__form__button"
+            onClick={() => setBuscando("Buscando...")}
+          >
+            Buscar
+          </button>
         </div>
 
         {urlResult ? (
@@ -51,12 +56,12 @@ export const Main = () => {
             target="_blank"
             rel="noreferrer"
             href={urlResult}
-            className="download_btn"
+            className="main__link"
           >
             Descargar beat
           </a>
         ) : (
-          ""
+          <p className="main__link">{buscando}</p>
         )}
       </form>
     </StyledMain>

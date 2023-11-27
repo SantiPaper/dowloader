@@ -24,16 +24,37 @@ export const StyledMain = styled.main`
         font-size: 1.3rem;
       }
 
+      &__container {
+        display: flex;
+        gap: 1.5rem;
+      }
       &__input {
         width: 60rem;
         height: 5rem;
         padding-left: 1rem;
         font-size: 2rem;
+        font-family: inherit;
       }
       &__input::placeholder {
         color: black;
         opacity: 0.2;
       }
+      &__button {
+        font-family: inherit;
+        background-color: white;
+        color: black;
+        height: 5rem;
+        padding: 0.5rem 0.5rem;
+        font-size: 2rem;
+        border: 1px solid white;
+        cursor: pointer;
+        border-radius: 0.6rem;
+      }
+    }
+    &__link {
+      margin-top: 3rem;
+      font-size: 2rem;
+      color: white;
     }
   }
 `;
